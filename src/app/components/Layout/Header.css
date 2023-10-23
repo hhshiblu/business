@@ -1,0 +1,102 @@
+header ul li {
+  margin-left: 30px;
+}
+header ul li a {
+  transition: 0.5s;
+
+  font-weight: 400;
+}
+header ul li a:hover {
+  color: #ff014f;
+}
+
+.open {
+  display: none;
+}
+
+.search {
+  z-index: 99;
+}
+
+
+
+.nav_menu {
+  background-color: rgb(253, 253, 254);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 300px;
+  color: #000;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: 0.4s ease-in-out;
+  transform: translateX(-100%);
+  text-align: center;
+  z-index: 9999999999999999;
+  overflow-x: hidden;
+}
+.nav_phone {
+  transform: translateX(0%);
+}
+.nav_menu2 {
+  background: #fff;
+  position: fixed;
+  right: 0;
+  top: 45px;
+ /* top:30px; */
+  height: calc(100vh - 45.6px);
+
+  width: 300px;
+  transition: 0.4s ease-in-out;
+  transform: translateX(100%);
+}
+.nav_phone2 {
+  transform: translateX(0%);
+}
+
+/* Add this CSS to your stylesheet */
+.cross-icon {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.visiable {
+
+  opacity: 1;
+}
+
+.navbar {
+  position:sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+@media (max-width: 768px) {
+  .navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  }
+}
+.navbar.sticky {
+  position: fixed;
+  animation: slide-down 0.8s ease-in-out;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.forHover:hover h3{
+color: #000;
+}
+.forHover:hover svg{
+color: #000;
+}

@@ -1,0 +1,554 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type CartsCartItems {
+  id        String @map("_id") @db.ObjectId
+  productId String @db.ObjectId
+  quantity  Int
+}
+
+type EventsSeller {
+  v                Int      @map("__v")
+  id               String   @map("_id") @db.ObjectId
+  address          String
+  availableBalance Int
+  avatar           String
+  createdAt        DateTime @db.Date
+  email            String
+  name             String
+  phoneNumber      Int
+  role             String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  zipCode          Int
+}
+
+type OrdersCart {
+  v             Int?                   @map("__v")
+  id            String?                @map("_id")
+  category      String?
+  /// Multiple data types found: String: 90.5%, Array(String): 9.5% out of 22 sampled entries
+  color         Json?
+  createdAt     String?
+  description   String?
+  discountPrice Int?
+  images        String[]
+  isReviewed    Boolean?
+  name          String?
+  originalPrice Int?
+  productInfo   OrdersCartProductInfo?
+  qty           Int?
+  quantity      Int?
+  /// Multiple data types found: Float: 25%, Int: 75% out of 8 sampled entries
+  ratings       Json?
+  reviews       OrdersCartReviews[]
+  seller        OrdersCartSeller?
+  sellerId      String
+  /// Multiple data types found: String: 90.5%, Array(String): 9.5% out of 22 sampled entries
+  size          Json?
+  sold_out      Int?
+  stock         Int?
+  tags          String?
+}
+
+type OrdersCartProductInfo {
+  v             Int                            @map("__v")
+  id            String                         @map("_id") @db.ObjectId
+  category      String
+  color         String[]
+  createdAt     DateTime                       @db.Date
+  description   String
+  discountPrice Int
+  images        String[]
+  name          String
+  originalPrice Int
+  /// Multiple data types found: Float: 40%, Int: 60% out of 5 sampled entries
+  ratings       Json?
+  reviews       OrdersCartProductInfoReviews[]
+  seller        OrdersCartProductInfoSeller
+  sellerId      String
+  size          String[]
+  sold_out      Int
+  stock         Int
+  subCategory   String?
+  tags          String
+}
+
+type OrdersCartProductInfoReviews {
+  id        String                           @map("_id") @db.ObjectId
+  comment   String
+  createdAt DateTime                         @db.Date
+  productId String
+  rating    Int
+  user      OrdersCartProductInfoReviewsUser
+}
+
+type OrdersCartProductInfoReviewsUser {
+  v           Int                                         @map("__v")
+  id          String                                      @map("_id")
+  addresses   OrdersCartProductInfoReviewsUserAddresses[]
+  avatar      String?
+  cpassword   String
+  createdAt   String
+  email       String
+  name        String
+  /// Multiple data types found: Float: 71.4%, Int: 28.6% out of 7 sampled entries
+  phoneNumber Json
+  role        String
+}
+
+type OrdersCartProductInfoReviewsUserAddresses {
+  id          String @map("_id")
+  address1    String
+  address2    String
+  addressType String
+  city        String
+  country     String
+  zipCode     Int
+}
+
+type OrdersCartProductInfoSeller {
+  v                Int                                        @map("__v")
+  id               String                                     @map("_id") @db.ObjectId
+  address          String
+  /// Multiple data types found: Float: 57.9%, Int: 42.1% out of 19 sampled entries
+  availableBalance Json
+  avatar           String
+  createdAt        DateTime                                   @db.Date
+  email            String
+  name             String
+  phoneNumber      Int
+  role             String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  withdrawMethod   OrdersCartProductInfoSellerWithdrawMethod?
+  zipCode          Int
+}
+
+type OrdersCartProductInfoSellerWithdrawMethod {
+  bankAccountNumber String
+  bankAddress       String
+  bankCountry       String
+  bankHolderName    String
+  bankName          String
+  bankSwiftCode     String
+}
+
+type OrdersCartReviews {
+  id        String                @map("_id")
+  comment   String
+  createdAt String
+  productId String
+  rating    Int
+  user      OrdersCartReviewsUser
+}
+
+type OrdersCartReviewsUser {
+  v           Int                              @map("__v")
+  id          String                           @map("_id")
+  addresses   OrdersCartReviewsUserAddresses[]
+  avatar      String?
+  cpassword   String
+  createdAt   String
+  email       String
+  name        String
+  /// Multiple data types found: Float: 83.3%, Int: 16.7% out of 12 sampled entries
+  phoneNumber Json
+  role        String
+}
+
+type OrdersCartReviewsUserAddresses {
+  id          String @map("_id")
+  address1    String
+  address2    String
+  addressType String
+  city        String
+  country     String
+  zipCode     Int
+}
+
+type OrdersCartSeller {
+  v                Int                             @map("__v")
+  id               String                          @map("_id")
+  address          String
+  /// Multiple data types found: Float: 13.6%, Int: 86.4% out of 22 sampled entries
+  availableBalance Json
+  avatar           String
+  createdAt        String
+  email            String
+  name             String
+  phoneNumber      Int
+  role             String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  withdrawMethod   OrdersCartSellerWithdrawMethod?
+  zipCode          Int
+}
+
+type OrdersCartSellerWithdrawMethod {
+  bankAccountNumber String
+  bankAddress       String
+  bankCountry       String
+  bankHolderName    String
+  bankName          String
+  bankSwiftCode     String
+}
+
+type OrdersPaymentInfo {
+  status String?
+  type   String
+}
+
+type OrdersShippingAddress {
+  address1 String
+  address2 String?
+  city     String?
+  country  String?
+  district String?
+  division String?
+  /// Multiple data types found: String: 61.1%, Int: 38.9% out of 18 sampled entries
+  zipCode  Json
+}
+
+type OrdersUser {
+  v           Int                   @map("__v")
+  id          String                @map("_id")
+  addresses   OrdersUserAddresses[]
+  avatar      String?
+  cpassword   String?
+  createdAt   String
+  email       String
+  name        String
+  /// Multiple data types found: Float: 66.7%, Int: 33.3% out of 18 sampled entries
+  phoneNumber Json
+  role        String
+}
+
+type OrdersUserAddresses {
+  id          String  @map("_id")
+  address1    String
+  address2    String?
+  addressType String
+  city        String?
+  country     String?
+  district    String?
+  division    String?
+  zipCode     Int
+}
+
+type ProductsReviews {
+  id        String              @map("_id") @db.ObjectId
+  comment   String
+  createdAt DateTime            @db.Date
+  productId String
+  rating    Int
+  user      ProductsReviewsUser
+}
+
+type ProductsReviewsUser {
+  v           Int                            @map("__v")
+  id          String                         @map("_id")
+  addresses   ProductsReviewsUserAddresses[]
+  avatar      String?
+  cpassword   String
+  createdAt   String
+  email       String
+  name        String
+  /// Multiple data types found: Float: 83.3%, Int: 16.7% out of 6 sampled entries
+  phoneNumber Json
+  role        String
+}
+
+type ProductsReviewsUserAddresses {
+  id          String @map("_id")
+  address1    String
+  address2    String
+  addressType String
+  city        String
+  country     String
+  zipCode     Int
+}
+
+type ProductsSeller {
+  v                Int                           @map("__v")
+  id               String                        @map("_id") @db.ObjectId
+  address          String
+  /// Multiple data types found: Float: 40%, Int: 60% out of 10 sampled entries
+  availableBalance Json
+  avatar           String
+  createdAt        DateTime                      @db.Date
+  email            String
+  name             String
+  phoneNumber      Int
+  role             String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  withdrawMethod   ProductsSellerWithdrawMethod?
+  zipCode          Int
+}
+
+type ProductsSellerWithdrawMethod {
+  bankAccountNumber String
+  bankAddress       String
+  bankCountry       String
+  bankHolderName    String
+  bankName          String
+  bankSwiftCode     String
+}
+
+type SellerCustomersMyFriends {
+  fdId  String
+  image String?
+  name  String?
+}
+
+type UsersAddresses {
+  id          String  @map("_id") @db.ObjectId
+  address     String?
+  address1    String?
+  addressType String
+  district    String
+  division    String
+  name        String?
+  number      Int?
+  zipCode     Int
+}
+
+type WithdrawsSeller {
+  v                Int                           @map("__v")
+  id               String                        @map("_id") @db.ObjectId
+  address          String
+  availableBalance Float
+  avatar           String
+  createdAt        DateTime                      @db.Date
+  email            String
+  name             String
+  phoneNumber      Int
+  role             String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  withdrawMethod   WithdrawsSellerWithdrawMethod
+  zipCode          Int
+}
+
+type WithdrawsSellerWithdrawMethod {
+  bankAccountNumber String
+  bankAddress       String
+  bankCountry       String
+  bankHolderName    String
+  bankName          String
+  bankSwiftCode     String
+}
+
+model banars {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int      @map("__v")
+  avatar          String
+  createdAt       DateTime @db.Date
+  role            Int
+  urlbanarproduct String
+}
+
+model cardproducts {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  productId String   @db.ObjectId
+  quantity  Int
+  updatedAt DateTime @db.Date
+  userId    String   @db.ObjectId
+}
+
+model carts {
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int              @map("__v")
+  cartItems CartsCartItems[]
+  createdAt DateTime         @db.Date
+  updatedAt DateTime         @db.Date
+  userId    String           @db.ObjectId
+}
+
+model categories {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int       @map("__v")
+  avatar    String?
+  createdAt DateTime? @db.Date
+  name      String
+  parentId  String?
+  slug      String    @unique(map: "slug_1")
+  updatedAt DateTime? @db.Date
+}
+
+model conversations {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  createdAt     DateTime @db.Date
+  groupTitle    String
+  lastMessage   String?
+  lastMessageId String?
+  members       String[]
+  updatedAt     DateTime @db.Date
+}
+
+model coupouncodes {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  maxAmount Int?
+  minAmount Int?
+  name      String   @unique(map: "name_1")
+  sellerId  String
+  value     Int
+}
+
+model events {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  Finish_Date   DateTime     @db.Date
+  v             Int          @map("__v")
+  category      String
+  createdAt     DateTime     @db.Date
+  description   String
+  discountPrice Int
+  images        String[]
+  name          String
+  originalPrice Int
+  seller        EventsSeller
+  sellerId      String
+  sold_out      Int
+  start_Date    DateTime     @db.Date
+  status        String
+  stock         Int
+  tags          String
+}
+
+model messages {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int      @map("__v")
+  conversationId String
+  createdAt      DateTime @db.Date
+  sender         String
+  text           String
+  updatedAt      DateTime @db.Date
+}
+
+model orders {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int                @map("__v")
+  cart            OrdersCart[]
+  createdAt       DateTime           @db.Date
+  deliveredAt     DateTime?          @db.Date
+  paidAt          DateTime           @db.Date
+  paymentInfo     OrdersPaymentInfo?
+  /// Multiple data types found: String: 37.9%, OrdersShippingAddress: 62.1% out of 29 sampled entries
+  shippingAddress Json
+  shopTotalPrice  Int?
+  status          String
+  totalPrice      Int
+  /// Multiple data types found: String: 37.9%, OrdersUser: 62.1% out of 29 sampled entries
+  user            Json
+}
+
+model products {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int               @map("__v")
+  category      String
+  color         String[]
+  createdAt     DateTime          @db.Date
+  description   String
+  discountPrice Int
+  images        String[]
+  name          String
+  originalPrice Int
+  /// Multiple data types found: Float: 33.3%, Int: 66.7% out of 3 sampled entries
+  ratings       Json?
+  reviews       ProductsReviews[]
+  seller        ProductsSeller
+  sellerId      String
+  size          String[]
+  sold_out      Int
+  stock         Int
+  subCategory   String?
+  tags          String
+}
+
+model seller_admin_messages {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model seller_customer_messages {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v          Int      @map("__v")
+  createdAt  DateTime @db.Date
+  message    String
+  receverId  String
+  senderId   String
+  senderName String
+  status     String
+  updatedAt  DateTime @db.Date
+}
+
+model seller_customers {
+  id        String                     @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int                        @map("__v")
+  createdAt DateTime                   @db.Date
+  myFriends SellerCustomersMyFriends[]
+  myId      String
+  updatedAt DateTime                   @db.Date
+}
+
+model shops {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  v                Int      @map("__v")
+  address          String
+  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
+  availableBalance Json
+  avatar           String
+  createdAt        DateTime @db.Date
+  description      String?
+  email            String
+  name             String
+  password         String
+  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
+  phoneNumber      Json
+  role             String
+  status           String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  transections     Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  withdrawMethod   Json?
+  zipCode          Int
+}
+
+model upeventschemas {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model users {
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int              @map("__v")
+  addresses   UsersAddresses[]
+  avatar      String?
+  cpassword   String?
+  createdAt   DateTime         @db.Date
+  email       String
+  name        String
+  password    String
+  phoneNumber Int?
+  role        String
+}
+
+model withdraws {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int             @map("__v")
+  amount    Int
+  createdAt DateTime        @db.Date
+  seller    WithdrawsSeller
+  status    String
+  updatedAt DateTime        @db.Date
+}
