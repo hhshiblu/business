@@ -10,9 +10,9 @@ import { server } from "@/app/serverURL";
 import { useRouter } from "next/navigation";
 import styles from "@/app/styles/style";
 import Image from "next/image";
-import {signIn} from "next-auth/react"
+import { signIn } from "next-auth/react";
 function Page() {
-  const route = useRouter();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -20,14 +20,21 @@ function Page() {
   const hendelSubmit = async (e) => {
     e.preventDefault();
     try {
-    // const res=  await signIn("credentials",{ email, password, redirect:false })
-      await axios.post(
+      // const res=  await signIn("credentials",{ email, password, redirect:false })
+      const res = await axios.post(
         `${server}user/login`,
         { email, password },
         { withCredentials: true }
       );
-   
 
+      if (res.data.success === true) {
+        signIn("credentials", {
+          email,
+          password,
+          callbackUrl: "/about",
+          redirect: true,
+        });
+      }
     } catch (error) {
       //   toast.error(error.response.data.message)
       console.log(error);
@@ -129,16 +136,24 @@ function Page() {
                 >
                   Login
                 </button>
-                          </div>
-                              <div>
+              </div>
+              <div>
                 <button
                   type="submit"
                   className=" group relative w-full h-[40px] flex justify-center py-2 px-4 border  text-sm font-medium rounded-md text-black shadow-sm  "
                 >
-                                  Sign in with Google  <span className='pl-1 pt-1'><Image src={ '/image/google.png'}  width={16} height={16} alt={'google.png'} /></span> 
+                  Sign in with Google{" "}
+                  <span className="pl-1 pt-1">
+                    <Image
+                      src={"/image/google.png"}
+                      width={16}
+                      height={16}
+                      alt={"google.png"}
+                    />
+                  </span>
                 </button>
-                          </div>
-        
+              </div>
+
               <div className={`${styles.normalFlex} w-full`}>
                 <h4> Not have any account?</h4>
                 <Link href="/signup" className="text-blue-500 p-2">

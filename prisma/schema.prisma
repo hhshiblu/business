@@ -540,7 +540,7 @@ model users {
   name        String
   password    String
   phoneNumber Int?
-  role        String
+  role        String @default("user")
 }
 
 model withdraws {

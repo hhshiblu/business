@@ -1,6 +1,5 @@
 "use client";
-import React, {  useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Link from "next/link";
 import { BiMenuAltLeft } from "react-icons/bi";
@@ -12,25 +11,25 @@ import { FiShoppingCart } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 
 import { BsArrowLeftShort } from "react-icons/bs";
-
 import styles from "@/app/styles/style";
 import Image from "next/image";
 import { getCategory } from "@/app/lib/allApiCall";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryActions } from "@/app/redux/reducer/categoryslice";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const Search = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(categoryActions.getAllCategoryAsync());
+  }, [dispatch]);
 
   const { categories } = useSelector((state) => state.category);
-  // const fetchData = useCallback(() => {
-
-  // }, [dispatch]);
-
+  const { cart } = useSelector((state) => state.cart);
 
   const [isAuthenticated, se] = useState(false);
   const user = "hekki";
-  const isSeller = "asfas";
+  const isSeller = true;
 
   const [activemenu, setActiveMenu] = useState("nav_menu");
   const [activeMenu2, setactiveMenu2] = useState("nav_menu2");
@@ -153,8 +152,6 @@ const Search = () => {
                     ) : (
                       <CgProfile size={30} color="#fff" />
                     )}
-               
-
                   </Link>
                 </div>
               </div>
@@ -164,7 +161,7 @@ const Search = () => {
                   <div className="relative cursor-pointer mr-[15px] text-white">
                     <FiShoppingCart size={30} className="text-white" />
                     <span className=" absolute right-[-6px] top-[-5px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[14px] font-[50] loading-tight text-center">
-                      {" "}
+                      {cart.length}
                     </span>
                   </div>
                 </Link>
@@ -184,7 +181,7 @@ const Search = () => {
             </div>
             <div className="my-auto">
               <Link
-                href={`${isSeller ? "/seller_DashBoard" : "/become-seller"}`}
+                href={`${isSeller ? "/seller-dashboard" : "/become-seller"}`}
                 className="mr-8  text-[#ffffff] font-semibold hover:border-[1px] px-[8px] pt-[9px] pb-[9px]  rounded-md "
               >
                 {" "}
@@ -341,7 +338,7 @@ const Search = () => {
                       size={18}
                     />
                     <span className=" absolute  right-[-7px] top-[-4px] rounded-full bg-[#eb2828] w-5 h-5 top right p-0 m-0 text-white font-mono text-[13px] loading-tight text-center">
-                      {/* {cart.length} */}
+                      {cart.length}
                     </span>
                     <p className="mt-[1px] text-xs text-white font-[700] ">
                       Cart

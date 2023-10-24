@@ -1,8 +1,10 @@
 import React from "react";
 import HomeSlider from "./HomeSlider.jsx";
+
 function HomeHero() {
   return (
     <div>
+
       <div className={` lg:max-w-[1024px] md:min-h-[cale(100vh_-_400px)] min-h-[cale(100vh_-_250px)] m-auto p-6 rounded-lg mb-12 `}>
         <div className="  flex flex-col gap-4 overflow-hidden lg:flex-row ">
           {/* --------- slider ---------- */}

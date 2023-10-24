@@ -11,20 +11,21 @@ import FeaturedProduct from "./components/Route/FeaturedProduct/FeaturedProduct"
 import Footer from "./components/Layout/Footer";
 import { useDispatch } from "react-redux";
 import { productActions } from "./redux/reducer/productSlice";
-import { categoryActions } from "./redux/reducer/categoryslice";
 
-export default function Home() {
+
+export default  function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(productActions.getAllProductsAsync());
-    dispatch(categoryActions.getAllCategoryAsync());
+
   }, [dispatch]);
+
 
   return (
     <main>
       <Header />
-      <HomeHero />
-      <BestDeals />
+     <HomeHero />
+      <BestDeals /> 
       <Cetagories />
       <BestElectronics />
       <br />
@@ -36,7 +37,7 @@ export default function Home() {
       <br />
 
       {/* <Subscribe/> */}
-      <Footer />
+      <Footer /> 
     </main>
   );
 }

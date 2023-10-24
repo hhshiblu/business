@@ -27,7 +27,7 @@ function Page() {
     setUser({ ...user, [name]: value });
   };
 
-const HandelSubmit = async (e) => {
+const HandelSubmit =  (e) => {
   e.preventDefault();
  const config = {
    headers: {

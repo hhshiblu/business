@@ -27,30 +27,15 @@ export async function POST(req, res) {
       return NextResponse.json({ message: "Invalid password" });
     }
 
-    const token = sign({ id: user.id }, process.env.SECRET, {
-      expiresIn: "30d",
-    });
+ 
 
     return  NextResponse.json(
       {
         success: true,
-        user,
-        token,
-      },
-      {
-        status: 200,
-        headers: {
-          "Set-Cookie": `jwt=${token}; sameSite=strict; httpOnly=true; maxAge=60*60*24`,
-        },
       }
+  
     );
-    
-    return NextResponse.json({
-      status: 200,
-      success: true,
-      user,
-      token,
-    });
+
   } catch (error) {
     console.error(error);
     return NextResponse.json({

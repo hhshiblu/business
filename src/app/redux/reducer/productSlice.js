@@ -34,6 +34,18 @@ export const getAllShopProductAsync = createAsyncThunk(
     }
   }
 );
+export const getSingleProductAsync = createAsyncThunk(
+  "product/getSingleProduct",
+  async (id, thunkAPI) => {
+    try {
+    
+      const { data } = await axios.get(`${server}product/single_product/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 export const deleteProductAsync = createAsyncThunk(
   "product/deleteProduct",
@@ -97,10 +109,23 @@ const productSlice = createSlice({
       })
       .addCase(productCreateAsync.fulfilled, (state, action) => {
         state.isloading = false;
-        state.product = action.payload;
+        
         state.success = true;
       })
       .addCase(productCreateAsync.rejected, (state, action) => {
+        state.isloading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+       .addCase(getSingleProductAsync.pending, (state) => {
+        state.isloading = true;
+      })
+      .addCase(getSingleProductAsync.fulfilled, (state, action) => {
+        state.isloading = false;
+        state.product = action.payload.product;
+        state.success = true;
+      })
+      .addCase(getSingleProductAsync.rejected, (state, action) => {
         state.isloading = false;
         state.error = action.payload;
         state.success = false;
@@ -153,6 +178,7 @@ const productSlice = createSlice({
 export const productActions = {
   productCreateAsync,
   getAllShopProductAsync,
+  getSingleProductAsync,
   deleteProductAsync,
     getAllProductsAsync,
   getQueryProductAsync

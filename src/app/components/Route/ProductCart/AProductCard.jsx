@@ -12,7 +12,7 @@ function AProductCard({ p}) {
     
         <div className="min-w-[245px] pb-4 rounded-lg max-w[250px] ">
           <div>
-            <Link href={`${`/product/${p._id}`} `}>
+            <Link href={`${`/product/${p.id}`} `}>
               <div className="  bg-gray-200 p-4 h-[200px] w-[240px] rounded-md">
                 <Image
                   src={``}
@@ -57,7 +57,7 @@ function AProductCard({ p}) {
                 </div>
               )}
             </div>
-            <Link href={`${`/product/${p._id}`}`}>
+            <Link href={`${`/product/${p.id}`}`}>
               <h5 className="pb-1 font-[500] text-[14px] leading-[19px]  hover:text-red-500">
                 {p.name.length > 20 ? p.name.slice(0, 36) + "..." : p.name}
               </h5>

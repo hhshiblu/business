@@ -1,51 +1,57 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-
+import { server } from "@/app/serverURL";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import Image from "next/image";
-
+import { getSingleProductAsync } from "@/app/redux/reducer/productSlice";
+import styles from "../styles/style";
 
 // import { toast } from "react-toastify";
 
-
 function ProductCart() {
-
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const [totalPrice, setTotalPrice] = useState(0); // Initialize to 0
   const [fetchedProductsData, setFetchedProductsData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const { queryUnderProduct, isloading } = useSelector((state) => state.product);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchProductsForCart = () => {
+    const fetchProductsForCart = async () => {
       let newTotalPrice = 0;
       const fetchedProducts = [];
 
       for (const item of cart) {
-        const productFromAllProducts = queryUnderProduct?.find(
-          (product) => product._id === item.productId
-        );
+        try {
+          setLoading(true);
+          const { data } = await axios.get(
+            `${server}product/single_product/${item.productId}`
+          );
+          setLoading(false);
+          const product = data.product;
 
-        if (productFromAllProducts) {
-          fetchedProducts.push({
-            product: productFromAllProducts,
-            quantity: item.quantity,
-            color: item.color,
-            size: item.size,
-          });
-          newTotalPrice += productFromAllProducts.discountPrice * item.quantity;
+          if (product) {
+            fetchedProducts.push({
+              product: product,
+              quantity: item.quantity,
+              color: item.color,
+              size: item.size,
+            });
+
+            newTotalPrice += product.discountPrice * item.quantity;
+          }
+        } catch (error) {
+          // Handle errors if the product fetch fails
+          console.error("Error fetching product:", error);
         }
       }
 
       setFetchedProductsData(fetchedProducts);
       setTotalPrice(newTotalPrice);
-      setLoading(false);
     };
 
     fetchProductsForCart();
@@ -172,18 +178,16 @@ const CartSingle = ({
   return (
     <li className="flex gap-3">
       <div>
-        <div>
-          <Image
-            alt={data.name}
-            loading="lazy"
-            width="80"
-            height="80"
-            decoding="async"
-            data-nimg="1"
-            className="mx-auto text-transparent transition-opacity duration-300 ease-in-out opacity-100 undefined"
-            src=""
-          />
-        </div>
+        <Image
+          alt={data.name}
+          loading="lazy"
+          width="80"
+          height="80"
+          decoding="async"
+          data-nimg="1"
+          className="mx-auto text-transparent transition-opacity duration-300 ease-in-out opacity-100 undefined"
+          src=""
+        />
       </div>
       <div className="flex flex-1">
         <div className="flex flex-col justify-between flex-1">
@@ -213,7 +217,7 @@ const CartSingle = ({
           </p>
           <button
             className="mt-2 font-medium text-gray-500 underline"
-            onClick={() => removeFromCartHandler(data._id)}
+            onClick={() => removeFromCartHandler(data.id)}
           >
             Remove
           </button>
