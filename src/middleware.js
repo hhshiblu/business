@@ -4,15 +4,15 @@ import { NextResponse } from "next/server";
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  if (pathname == "/login" || pathname == "/admin/login") {
+  if (pathname == "/login") {
     return NextResponse.next();
   }
 
   const token = await getToken({ req: request });
 
-  const userProtectedRoutes = ["/"];
+  const userProtectedRoutes = ["/about"];
 
-  if (token == null && userProtectedRoutes.includes(pathname)) {
+  if (!token && userProtectedRoutes.includes(pathname)) {
     return NextResponse.redirect(
       new URL(
         "/login?error=Please login first to access this route",

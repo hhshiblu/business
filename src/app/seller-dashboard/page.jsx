@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { AiOutlineArrowRight, AiOutlineMoneyCollect } from "react-icons/ai";
 
 import { MdBorderClear } from "react-icons/md";
@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 import Link from "next/link";
-import styles from "../styles/style";
+import styles from "@/styles/style";
 
 const DashboardHero = () => {
   const dispatch = useDispatch();

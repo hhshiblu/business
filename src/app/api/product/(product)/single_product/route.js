@@ -3,43 +3,54 @@ import prisma from "../../../../../../prisma/prisma";
 
 export async function POST(req, res) {
   try {
-    const reqBody = await req.json();
-    const { sellerId, ...productData } = reqBody;
+    const formData = await req.formData();
+    const name = formData.get("name");
+    const description = formData.get("description");
+    const category = formData.get("category");
+    const tags = formData.get("tags");
+    const subCategory = formData.get("subCategory");
+    const originalPrice = parseInt(formData.get("originalPrice"));
+    const discountPrice = parseInt(formData.get("discountPrice"));
+    const stock = parseInt(formData.get("stock"));
+    const color = formData.getAll("color[]"); // Parse colors as an array
+    const size = formData.getAll("size[]");
+    const sellerId = formData.get("sellerId");
 
-    // Check if the seller exists using Prisma
-    const seller = await prisma.sellers.findUnique({
-      where: {
-        id: sellerId,
+    const product = await prisma.products.create({
+      data: {
+        name,
+        description,
+        category,
+        subCategory,
+        originalPrice,
+        discountPrice,
+        stock,
+        color,
+        size,
+        tags,
+        sold_out: 0,
+        sellerId,
+        v: 0,
+        createdAt: new Date(),
       },
     });
 
-    if (!seller) {
-      return NextResponse.json({ message: "Shop Id is invalid!" });
-    } else {
-      //   const files = req.files;
-      //   const imageUrls = files.map((file) => `${file.filename}`);
-
-      // Create the product data with image URLs and seller reference
-      const product = await prisma.product.create({
-        data: {
-          ...productData,
-          //   images: imageUrls,
-          seller: {
-            connect: { id: sellerId },
-          },
-        },
-      });
-
-      return NextResponse.json({
-        success: true,
+    return NextResponse.json(
+      {
         product,
-      });
-    }
+        success: true,
+        message: "Product created successfully",
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error,
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
 

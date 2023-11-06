@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
@@ -18,6 +18,10 @@ const AllProducts = () => {
   const { sellerProduct, isloading, success } = useSelector(
     (state) => state.product
   );
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 6,
+    page: 0,
+  });
   // const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
@@ -120,7 +124,8 @@ const AllProducts = () => {
           <DataGrid
             rows={row}
             columns={columns}
-            pageSize={25}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
             disableSelectionOnClick
             autoHeight
           />

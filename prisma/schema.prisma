@@ -275,24 +275,6 @@ type ProductsReviewsUserAddresses {
   zipCode     Int
 }
 
-type ProductsSeller {
-  v                Int                           @map("__v")
-  id               String                        @map("_id") @db.ObjectId
-  address          String
-  /// Multiple data types found: Float: 40%, Int: 60% out of 10 sampled entries
-  availableBalance Json
-  avatar           String
-  createdAt        DateTime                      @db.Date
-  email            String
-  name             String
-  phoneNumber      Int
-  role             String
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  transections     Json?
-  withdrawMethod   ProductsSellerWithdrawMethod?
-  zipCode          Int
-}
-
 type ProductsSellerWithdrawMethod {
   bankAccountNumber String
   bankAddress       String
@@ -462,19 +444,16 @@ model products {
   createdAt     DateTime          @db.Date
   description   String
   discountPrice Int
-  images        String[]
   name          String
   originalPrice Int
-  /// Multiple data types found: Float: 33.3%, Int: 66.7% out of 3 sampled entries
   ratings       Json?
   reviews       ProductsReviews[]
-  seller        ProductsSeller
-  sellerId      String
   size          String[]
   sold_out      Int
   stock         Int
   subCategory   String?
   tags          String
+  sellerId      String?
 }
 
 model seller_admin_messages {
@@ -506,7 +485,6 @@ model shops {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   v                Int      @map("__v")
   address          String
-  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
   availableBalance Json
   avatar           String
   createdAt        DateTime @db.Date
@@ -514,13 +492,10 @@ model shops {
   email            String
   name             String
   password         String
-  /// Multiple data types found: Float: 25%, Int: 75% out of 4 sampled entries
   phoneNumber      Json
   role             String
   status           String?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  transections     Json?
-  /// Could not determine type: the field only had null or empty values in the sample set.
+  transactions     Json?
   withdrawMethod   Json?
   zipCode          Int
 }
@@ -540,7 +515,8 @@ model users {
   name        String
   password    String
   phoneNumber Int?
-  role        String @default("user")
+  sellerId    String?
+  role        String           @default("user")
 }
 
 model withdraws {

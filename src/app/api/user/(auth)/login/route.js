@@ -27,15 +27,9 @@ export async function POST(req, res) {
       return NextResponse.json({ message: "Invalid password" });
     }
 
- 
-
-    return  NextResponse.json(
-      {
-        success: true,
-      }
-  
-    );
-
+    return NextResponse.json({
+      success: true,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({

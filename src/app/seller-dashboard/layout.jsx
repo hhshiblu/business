@@ -13,7 +13,7 @@ import { RiCouponLine } from "react-icons/ri";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu } from "antd";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   MdOutlineLocalOffer,
@@ -31,16 +31,22 @@ import { IoNotifications } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { categoryActions } from "@/redux/reducer/categoryslice";
+
 const { Sider, Content } = Layout;
 
 const MainLayout = ({ children }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(categoryActions.getAllCategoryAsync());
+  }, [dispatch]);
   //   const { seller } = useSelector((state) => state.seller);
   const [collapsed, setCollapsed] = useState(true);
   const colorBgContainer = "#D61355";
 
   const router = useRouter();
 
-  const pathname = location.pathname;
+  // const pathname = location.pathname;
   const [activeKey, setActiveKey] = useState("");
   const menuItems = [
     {
@@ -164,14 +170,11 @@ const MainLayout = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={[pathname]}
+          // defaultSelectedKeys={[pathname]}
           selectedKeys={[activeKey]}
           onClick={({ key }) => {
             router.push(key);
             setActiveKey(key);
-          }}
-          onmouseenter={(event) => {
-            setActiveKey(event.key);
           }}
           items={menuItems.map((item) => ({
             ...item,

@@ -3,25 +3,20 @@ import prisma from "../../../../../../../prisma/prisma";
 
 export async function GET(req, { params }) {
   try {
-    const userId = params.userId;
+    const id = params.id;
 
-    const orders = await prisma.orders.findMany({
+    const sellerProducts = await prisma.products.findMany({
       where: {
-        user: {
-          userId: userId,
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
+        sellerId: id,
       },
     });
     return NextResponse.json({
       success: true,
-      orders,
+      sellerProducts,
     });
   } catch (error) {
     return NextResponse.json({
-      message: error.message,
+      message: error.message, // Access the error message using error.message
     });
   }
 }
