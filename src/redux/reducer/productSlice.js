@@ -70,15 +70,12 @@ export const getAllProductsAsync = createAsyncThunk(
         category: query.category,
         subCategory: query.subCategory,
         rating: query.rating,
-
-        sortPrice: query.sortPrice,
         pageNumber: query.pageNumber,
         searchValue: query.searchValue || "",
       });
       if (query.maxPrice) {
         queryParams.set("maxPrice", query.maxPrice);
       }
-      console.log(queryParams);
       const url = `${server}product/allproduct?${queryParams}`;
       const { data } = await axios.get(url);
 
@@ -175,7 +172,7 @@ const productSlice = createSlice({
       })
       .addCase(getAllProductsAsync.fulfilled, (state, action) => {
         state.isloading = false;
-        state.products = action.payload;
+        state.products = action.payload.result;
       })
       .addCase(getAllProductsAsync.rejected, (state, action) => {
         state.isloading = false;

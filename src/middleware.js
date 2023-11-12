@@ -2,24 +2,20 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export async function middleware(request) {
-  const { pathname } = request.nextUrl;
-
-  if (pathname == "/login") {
-    return NextResponse.next();
-  }
-
-  const token = await getToken({ req: request });
-
-  const userProtectedRoutes = ["/about"];
-
-  if (!token && userProtectedRoutes.includes(pathname)) {
-    return NextResponse.redirect(
-      new URL(
-        "/login?error=Please login first to access this route",
-        request.url
-      )
-    );
-  }
+  // const { pathname } = request.nextUrl;
+  // if (pathname == "/login") {
+  //   return NextResponse.next();
+  // }
+  // const token = await getToken({ req: request });
+  // const userProtectedRoutes = ["/about"];
+  // if (!token && userProtectedRoutes.includes(pathname)) {
+  //   return NextResponse.redirect(
+  //     new URL(
+  //       "/login?error=Please login first to access this route",
+  //       request.url
+  //     )
+  //   );
+  // }
 }
 
 // const { getToken } = require("next-auth/jwt");

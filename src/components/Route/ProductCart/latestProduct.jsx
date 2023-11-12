@@ -3,12 +3,11 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { backend_URL } from "../../../serverUrl";
-import Rating from "../../ProductDetails/Rating";
-import styles from "../../../styles/style";
-const latestProduct = ({ title, products }) => {
 
+import Link from "next/link";
+import Image from "next/image";
+
+const latestProduct = ({ title, products }) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -71,47 +70,49 @@ const latestProduct = ({ title, products }) => {
             >
               {p.map((pl, j) => (
                 <div key={j} className="flex justify-start items-start pb-2">
-                  <Link to={`${`/product/${pl._id}`}`}>
-                    <img
+                  <Link href={`${`/product/${pl._id}`}`}>
+                    <Image
                       className="w-[100px] h-[100px] rounded-md shadow-lg p-1"
-                      src={`${backend_URL}upload/${pl && pl.images[0]}`}
+                      src={`upload/${pl && pl.images[0]}`}
                       alt="images"
+                      width={100}
+                      height={100}
                     />
-                    </Link>
-                  
-                    <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
-                       <Link to={`${`/product/${pl._id}`}`}>
+                  </Link>
+
+                  <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
+                    <Link to={`${`/product/${pl._id}`}`}>
                       <h2 className="hover:text-red-600">
                         {pl.name.length > 20
                           ? pl.name.slice(0, 20) + "..."
                           : pl.name}
                       </h2>
                     </Link>
-                      <h5 className={`font-Roboto font-semibold text-black `}>
-                        {pl.originalPrice === 0
-                          ? pl.originalPrice
-                          : pl.discountPrice}
-                        <span> ৳ </span>{" "}
-                      </h5>
-                      <div className="flex ">
-                        <h4
-                          className={`font-[500] text-sm text-[#f1331e] mt-[-3px]   line-through`}
-                        >
-                          {pl.originalPrice ? pl.originalPrice + " ৳" : null}
-                        </h4>
-                        <div className="text-sm  text-blue-950 pl-4 mt-[-3px]">
-                          (
-                          {(pl.originalPrice === 0
-                            ? 0
-                            : ((pl.originalPrice - pl.discountPrice) /
-                                pl.originalPrice) *
-                              100
-                          ).toFixed(0)}
-                          %)
-                        </div>
+                    <h5 className={`font-Roboto font-semibold text-black `}>
+                      {pl.originalPrice === 0
+                        ? pl.originalPrice
+                        : pl.discountPrice}
+                      <span> ৳ </span>{" "}
+                    </h5>
+                    <div className="flex ">
+                      <h4
+                        className={`font-[500] text-sm text-[#f1331e] mt-[-3px]   line-through`}
+                      >
+                        {pl.originalPrice ? pl.originalPrice + " ৳" : null}
+                      </h4>
+                      <div className="text-sm  text-blue-950 pl-4 mt-[-3px]">
+                        (
+                        {(pl.originalPrice === 0
+                          ? 0
+                          : ((pl.originalPrice - pl.discountPrice) /
+                              pl.originalPrice) *
+                            100
+                        ).toFixed(0)}
+                        %)
                       </div>
                     </div>
-               
+                  </div>
+
                   <hr />
                   <hr />
                   <hr />

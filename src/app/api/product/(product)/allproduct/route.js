@@ -54,7 +54,7 @@ export async function GET(req) {
       .priceQuery()
       .highPriceQuery()
       .searchQuery()
-      .sortByPrice()
+      // .sortByPrice()
       .skip()
       .limit()
       .getProducts();
@@ -65,7 +65,7 @@ export async function GET(req) {
       .priceQuery()
       .highPriceQuery()
       .searchQuery()
-      .sortByPrice()
+      // .sortByPrice()
       .countProducts();
     const resultWithoutQuery = { ...result };
     delete resultWithoutQuery.query;
